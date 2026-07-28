@@ -1,0 +1,8 @@
+# Copy this file to checkinventory.local and edit it for your environment.
+# The local file is intentionally ignored by Git.
+
+ssh_user="root"
+nodes=("pve" "pve2" "pve3")
+
+# Optional: use IPs instead of hostnames if you run this from a machine
+# that does not resolve your Proxmox hostnames.
