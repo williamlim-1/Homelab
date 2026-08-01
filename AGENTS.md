@@ -11,7 +11,7 @@ This repository is for professional homelab documentation.
 
 ## Documentation Flow
 
-- Use `agent.md` for repository-specific documentation rules.
+- Use `CLAUDE.md` for repository-specific documentation rules.
 - Use `docs/journal/` for chronological change tracking.
 - Use `docs/private/` for sensitive operational details.
 - Keep public docs focused on architecture, purpose, state, and lessons learned.
