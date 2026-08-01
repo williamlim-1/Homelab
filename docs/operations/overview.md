@@ -34,5 +34,8 @@ Summarize the current operational posture of the homelab.
 
 ## Related Documentation
 
+- [`docs/operations/snapshots.md`](snapshots.md)
+- [`docs/operations/maintenance.md`](maintenance.md)
+- [`docs/operations/troubleshooting.md`](troubleshooting.md)
 - [`docs/journal/`](../journal/)
 - [`docs/diagrams/backup-architecture.md`](../diagrams/backup-architecture.md)

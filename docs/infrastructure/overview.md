@@ -8,6 +8,8 @@ Summarize the core infrastructure that underpins the homelab.
 
 The homelab is built around a dedicated physical OPNsense firewall, a three-node Proxmox cluster, internal identity services, and a compact physical rack.
 
+This covers compute, networking, storage, virtualization, and shared services. Public-facing descriptions of this environment use role-based labels (`edge firewall`, `cluster node`, `storage tier`) rather than exact network ranges, hostnames, or serial numbers.
+
 ## Current State
 
 - Dedicated physical OPNsense firewall

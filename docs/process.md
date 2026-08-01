@@ -5,8 +5,8 @@ This repository is designed so an infrastructure session can be documented as it
 ## How To Use It
 
 1. Make the infrastructure change in PVE, OPNsense, or a VM.
-2. In the same session, ask Codex to document what changed.
-3. Codex should update the journal entry and any relevant public or private docs.
+2. In the same session, document what changed.
+3. Update the journal entry and any relevant public or private docs.
 4. If a detail is uncertain, mark it clearly instead of guessing.
 
 ## Preferred Outcomes
@@ -24,4 +24,3 @@ Use a short placeholder such as:
 - `Unknown`
 - `Planned`
 - `Not Yet Implemented`
-

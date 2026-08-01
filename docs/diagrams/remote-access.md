@@ -44,5 +44,5 @@ Remote access avoids exposing individual services directly and instead enters th
 
 ## Related Documentation
 
-- [`docs/remote-access/tailscale.md`](../remote-access/tailscale.md)
+- [`docs/remote-access.md`](../remote-access.md)
 

@@ -2,13 +2,13 @@
 
 ## Purpose
 
-Summarize how identity and name resolution are handled in the homelab.
+Summarize how identity and name resolution are handled in the homelab, and the reasoning behind the design.
 
 ## Current State
 
-- `corp.homelab` is the current Active Directory domain and forest
-- `dc-01` is the domain controller and DNS host
-- Windows clients authenticate against Active Directory
+- `corp.homelab` is the current Active Directory domain and forest.
+- `dc-01` is the domain controller and DNS host.
+- Windows clients authenticate against Active Directory.
 
 ## Architecture
 
@@ -19,10 +19,10 @@ Summarize how identity and name resolution are handled in the homelab.
 
 - Use a dedicated domain controller rather than ad hoc local accounts.
 - Keep DNS close to the identity system.
+- Keep identity centralized, starting with a single domain and expanding OU, group, and access-control structure over time.
+- Treat application integration as a future design area rather than a finished capability.
 - Avoid documenting sensitive identity details in public files.
 
 ## Related Documentation
 
 - [`docs/diagrams/identity-and-dns.md`](../diagrams/identity-and-dns.md)
-- [`docs/systems/dc-01.md`](../systems/dc-01.md)
-

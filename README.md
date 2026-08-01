@@ -42,11 +42,10 @@ I also want to keep room for analytics-oriented thinking so the environment supp
 
 ## Related Documentation
 
-- [`docs/architecture/overview.md`](docs/architecture/overview.md) - architecture and design context
-- [`docs/infrastructure/overview.md`](docs/infrastructure/overview.md) - firewall, virtualization, hardware, and cluster details
+- [`docs/infrastructure/overview.md`](docs/infrastructure/overview.md) - architecture, firewall, virtualization, hardware, and cluster details
 - [`docs/identity/overview.md`](docs/identity/overview.md) - Active Directory and DNS
 - [`docs/systems/overview.md`](docs/systems/overview.md) - the main VMs and workload systems
-- [`docs/remote-access/overview.md`](docs/remote-access/overview.md) - Tailscale and remote administration
+- [`docs/remote-access.md`](docs/remote-access.md) - Tailscale and remote administration
 - [`docs/operations/overview.md`](docs/operations/overview.md) - snapshots, backups, and operational posture
 - [`docs/journal/working-journal.md`](docs/journal/working-journal.md) - consolidated technical history
 - [`docs/goals.md`](docs/goals.md) - long-term learning goals

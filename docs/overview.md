@@ -43,11 +43,10 @@ The homelab is organized around a dedicated edge firewall, clustered virtualizat
 ## Related Documentation
 
 - [`README.md`](../README.md)
-- [`docs/architecture/overview.md`](architecture/overview.md)
 - [`docs/infrastructure/overview.md`](infrastructure/overview.md)
 - [`docs/identity/overview.md`](identity/overview.md)
 - [`docs/systems/overview.md`](systems/overview.md)
-- [`docs/remote-access/overview.md`](remote-access/overview.md)
+- [`docs/remote-access.md`](remote-access.md)
 - [`docs/operations/overview.md`](operations/overview.md)
 - [`docs/journal/working-journal.md`](journal/working-journal.md)
 - [`docs/goals.md`](goals.md)
