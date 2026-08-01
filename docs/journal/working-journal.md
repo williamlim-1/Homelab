@@ -408,3 +408,75 @@ Convert the backup target from a node-local path into a shared cluster-wide repo
 ### Engineering Takeaways
 
 - Shared storage is what turns a backup disk into a cluster backup repository.
+
+## 2026-08-01 - Monitoring Stack (monitor-01)
+
+### Objective
+
+Stand up the first monitoring system in the homelab, covering both hypervisor-level and guest-OS-level visibility.
+
+### Completed Work
+
+- Provisioned `monitor-01` on `pve3`, placed on the SSD-backed `local-lvm` pool to keep it off the same storage path as the `pve3-backup` NFS export
+- Installed Ubuntu Server, QEMU Guest Agent, and Docker Engine (official Docker repo, not the distro package)
+- Generated a dedicated ED25519 keypair on `pve3` scoped to host-to-guest administration, separate from the cluster's inter-node SSH trust key
+- Disabled password SSH authentication on `monitor-01` after key-based access was confirmed
+- Deployed Prometheus, Grafana, and `node_exporter` via Docker Compose on `monitor-01`
+- Created a dedicated, read-only (`PVEAuditor`) Proxmox API user and token for monitoring, rather than reusing a privileged account
+- Deployed `prometheus-pve-exporter` to provide cluster-wide Proxmox node, VM, and storage metrics
+- Installed `node_exporter` natively on `ubuntu-01` for guest-OS-level metrics
+- Imported a node-exporter Grafana dashboard and a Proxmox-cluster Grafana dashboard
+- Added `/etc/hosts` and SSH config entries on `pve3` for hostname-based access to `monitor-01`
+
+### Architecture Changes
+
+- The homelab has its first real-time metrics pipeline: Prometheus scraping multiple sources, visualized in Grafana.
+- Monitoring is split into two intentionally separate layers: hypervisor-level (via the Proxmox API) and guest-OS-level (via `node_exporter` inside each VM). Neither layer alone gives full visibility.
+
+### Technical Decisions
+
+- Use Docker Compose for the monitoring stack rather than distro packages, for consistent versioning and easier multi-service orchestration.
+- Use a dedicated SSH key for host-to-guest administrative access rather than reusing the Proxmox cluster's inter-node key, to keep that trust boundary from expanding into guest VMs.
+- Use a scoped, read-only Proxmox API token for `pve-exporter` rather than a privileged account.
+- Use IP addresses rather than hostnames for Prometheus scrape targets outside the Compose stack, since containers have no route to `/etc/hosts` entries defined on the host or other cluster nodes.
+
+### Challenges
+
+- `docker-compose.yml` failed to parse after adding the `pve-exporter` service due to inconsistent YAML indentation.
+- Editing `prometheus.yml` (bind-mounted into the Prometheus container) did not take effect until the container was restarted; the running process does not watch the file for changes.
+- `pve-exporter` initially failed to resolve `pve.homelab.local`, since that hostname only existed in `/etc/hosts` on `pve3`, not inside the container or on `monitor-01` itself.
+- After fixing DNS, `pve-exporter` failed authentication against the Proxmox API with a 401.
+
+### Root Cause
+
+- The YAML failure was inconsistent indentation levels within the new service block.
+- The Prometheus scrape gap was a stale in-memory config; the file on disk was correct but not reloaded.
+- The DNS failure was a scoping mismatch: `/etc/hosts` entries on one host are not visible to containers running on a different host, or even to other containers on the same host unless explicitly shared.
+- The 401 was a malformed `PVE_USER` value — it incorrectly included the token ID (`user!tokenname`) instead of just the user (`user@realm`), since the token name is supplied separately.
+
+### Resolution
+
+- Rewrote `docker-compose.yml` with consistent indentation.
+- Restarted the Prometheus container after config changes; confirmed via the `/api/v1/targets` endpoint rather than assuming success.
+- Replaced the unresolvable hostname with the Proxmox node's known IP address in the scrape target.
+- Corrected `PVE_USER` to the bare `user@realm` form.
+
+### Verification
+
+- All Prometheus scrape targets (`prometheus`, `monitor-01`, `ubuntu-01`, `pve`) report `health: up` with no `lastError`.
+- Grafana's Proxmox dashboard shows live, distinct per-node data for `pve`, `pve2`, and `pve3`.
+- Grafana's node-exporter dashboard shows live data for both `monitor-01` and `ubuntu-01` via its dynamic job/instance selectors.
+- Passwordless SSH from `pve3` to `monitor-01` confirmed working after password authentication was disabled.
+
+### Lessons Learned
+
+- A container's stated "health" from `docker compose ps` only confirms the process started, not that it is functioning correctly end-to-end — always verify the actual data path (in this case, Prometheus's own targets API).
+- Bind-mounted config files require a container restart to take effect; there is no automatic reload for Prometheus without `--web.enable-lifecycle`.
+- Hostname resolution scoped to one host's `/etc/hosts` does not extend into containers, other hosts, or other VMs — cluster-wide naming needs either DNS or explicit per-scope configuration.
+- Credentials typed into a chat or terminal session should be treated as compromised once exposed, even briefly - the fix is to close off the exposure (disable password auth, rotate the credential), not just to note the exposure occurred.
+- Reusing the same password across multiple services (VM login, Grafana admin) means a single leak compromises more than one system.
+
+### Engineering Takeaways
+
+- A monitoring stack is only as trustworthy as its own verification: every layer (container running, config loaded, target scraped, dashboard rendering) needs to be checked independently rather than assumed from the previous layer's success.
+- Splitting monitoring into hypervisor-level and guest-level layers, each with least-privilege credentials, keeps the monitoring system itself from becoming an oversized security liability.

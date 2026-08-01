@@ -11,7 +11,7 @@ Summarize the key virtual machines and workload systems in the homelab.
 - `docker-01` - container host, needs verification
 - `win11-01` - IT administration workstation
 - `win11-02` - simulated employee workstation
-- `monitor-01` - planned monitoring system
+- `monitor-01` - monitoring system running Prometheus and Grafana
 
 ## Architecture
 
