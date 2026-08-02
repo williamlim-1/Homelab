@@ -16,7 +16,7 @@ Provide a single high-level view of the homelab and its current technical state.
 - Centralized Proxmox backups on `pve3-backup`
 - Backup storage exported from `pve3` and used as the shared Proxmox backup target
 - Docker and monitoring work still evolving
-- Planned internal application work, including OwlHQ
+- Planned internal application work, including Stark
 
 ## Architecture
 

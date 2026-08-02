@@ -30,7 +30,7 @@ flowchart TB
     Backup[pve3 Shared Backup Repository]
     Docker[Docker Services]
     Monitor[Monitoring - Planned]
-    Owl[OwlHQ - Planned]
+    Stark[Stark - Planned]
     Remote[Remote Tailscale Devices]
 
     Internet --> OEC
@@ -43,7 +43,7 @@ flowchart TB
     PVE --> Backup
     PVE --> Docker
     PVE -.-> Monitor
-    PVE -.-> Owl
+    PVE -.-> Stark
     Remote -->|Encrypted Tailscale connection| FW
 ```
 
@@ -54,14 +54,14 @@ The diagram shows the firewall as the edge boundary and the Proxmox cluster as t
 ## Assumptions
 
 - Public documentation should not expose IP addresses.
-- Monitoring and OwlHQ are planned, not yet confirmed as production services.
+- Monitoring and Stark are planned, not yet confirmed as production services.
 - The shared backup repository is current, not planned.
 
 ## Items Needing Verification
 
 - Exact placement of some services within the cluster
 - Whether monitoring is operational
-- Whether OwlHQ has any deployed components
+- Whether Stark has any deployed components
 
 ## Related Documentation
 

@@ -12,7 +12,7 @@ Show how core services depend on each other.
 - Linux administration
 - Container services
 - Monitoring
-- OwlHQ
+- Stark
 - Firewall services
 - Shared backup storage
 
@@ -25,7 +25,7 @@ flowchart TB
     Lin[ubuntu-01 Current]
     Dock[docker-01 Needs Verification]
     Mon[monitor-01 Planned]
-    Owl[OwlHQ Planned]
+    Stark[Stark Planned]
     Backup[pve3 Shared Backup Repository Current]
     FW[OPNsense Current]
     Legacy[fw-01 Historical]
@@ -37,7 +37,7 @@ flowchart TB
     AD --> Backup
     Lin --> Backup
     Mon -.-> FW
-    Owl -.-> Dock
+    Stark -.-> Dock
     Legacy -.-> FW
 ```
 
@@ -55,10 +55,10 @@ The diagram shows current dependencies and keeps planned items visibly distinct.
 
 - `monitor-01` deployment state
 - `docker-01` actual hosting details
-- OwlHQ deployment timeline
+- Stark deployment timeline
 - Whether any additional VMs are intended to be added to backup scope
 
 ## Related Documentation
 
 - [`docs/systems/monitoring.md`](../systems/monitoring.md)
-- [`docs/applications/owlhq.md`](../applications/owlhq.md)
+- [`docs/applications/stark.md`](../applications/stark.md)

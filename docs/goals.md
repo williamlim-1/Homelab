@@ -133,7 +133,7 @@ Long-term capability:
 
 ## Development
 
-This area matters because OwlHQ and related tooling connect infrastructure to software delivery.
+This area matters because Stark and related tooling connect infrastructure to software delivery.
 
 Skills being developed:
 - Service design
